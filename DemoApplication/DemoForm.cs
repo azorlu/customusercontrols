@@ -16,5 +16,20 @@ namespace DemoApplication
         {
             InitializeComponent();
         }
+
+        private void btnImage_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Open Image";
+                dlg.Filter = "Image Files(*.BMP;*.JPG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.JPEG;*.GIF|All files (*.*)|*.*";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    this.simplePictureBox.Image = new Bitmap(dlg.FileName);
+                    this.Invalidate();
+                }
+            }
+        }
     }
 }

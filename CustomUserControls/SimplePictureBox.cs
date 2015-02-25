@@ -15,7 +15,8 @@ namespace CustomUserControls
         public SimplePictureBox()
         {
             InitializeComponent();
-            Image = new Bitmap(@"E:\Ahmet\dev\projects\CustomUserControls\DemoApplication\Assets\microsoft_logo_2012.jpeg");
+            // default image to be displayed
+            Image = (Image) Properties.Resources.ResourceManager.GetObject("microsoft_logo_2012");
             this.Dock = DockStyle.Fill;
         }
 
@@ -24,7 +25,9 @@ namespace CustomUserControls
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            g.DrawImage(Image, 0, 0, 360, 360);
+            int imgWidth = Image.Width;
+            int imgHeight = Image.Height;
+            g.DrawImage(Image, 0, 0);
             base.OnPaint(e);
         }
     }
