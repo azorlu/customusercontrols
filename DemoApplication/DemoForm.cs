@@ -22,12 +22,11 @@ namespace DemoApplication
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 dlg.Title = "Open Image";
-                dlg.Filter = "Image Files(*.BMP;*.JPG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.JPEG;*.GIF|All files (*.*)|*.*";
+                dlg.Filter = "Image Files(*.BMP;*.JPG;*.JPEG;*.GIF;*.PNG)|*.BMP;*.JPG;*.JPEG;*.GIF;*.PNG";
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     this.simplePictureBox.Image = new Bitmap(dlg.FileName);
-                    this.Invalidate();
                 }
             }
         }
