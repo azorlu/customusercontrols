@@ -13,9 +13,9 @@ namespace CustomUserControls
     public partial class SimplePictureBox: UserControl
     {
         private Image image;
-        private string imageLocation;
+        private SimplePictureBoxSizeMode sizeMode;
 
-        [Description("Gets or sets the image that is displayed.")]
+        [Browsable(true), Description("Gets or sets the image that is displayed.")]
         public Image Image 
         {
             get
@@ -29,10 +29,25 @@ namespace CustomUserControls
                 Invalidate();
             }
         }
+
+        [Browsable(true), Description("Specifies how the image is positioned.")]
+        public SimplePictureBoxSizeMode SizeMode
+        {
+            get
+            {
+                return sizeMode;
+            }
+            set
+            {
+                sizeMode = value;
+                Invalidate();
+            }
+        }
         
         public SimplePictureBox()
         {
             InitializeComponent();
+            sizeMode = SimplePictureBoxSizeMode.AutoSize;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -42,7 +57,32 @@ namespace CustomUserControls
             {
                 image = new Bitmap(Properties.Resources.microsoft_logo_2012, 200, 200);
             }
-            g.DrawImage(image, 0, 0); 
+            int spbWidth = this.Width;
+            int spbHeight = this.Height;
+            int imgWidth = image.Width;
+            int imgHeight = image.Height;
+            switch(sizeMode)
+            {
+                case SimplePictureBoxSizeMode.StretchImage:
+                    g.DrawImage(image, 0, 0, spbWidth, spbHeight);
+                    break;
+                case SimplePictureBoxSizeMode.AutoSize:
+                    this.Width = imgWidth;
+                    this.Height = imgHeight;
+                    g.DrawImage(image, 0, 0);
+                    break;
+                case SimplePictureBoxSizeMode.Normal:
+                    Rectangle destRect = new Rectangle(0, 0, spbWidth, spbHeight);
+                    Rectangle srcRect = new Rectangle(0, 0, spbWidth, spbHeight);
+                    GraphicsUnit units = GraphicsUnit.Pixel;
+                    g.DrawImage(image, destRect, srcRect, units);
+                    break;
+                default:
+                    g.DrawImage(image, 0, 0, spbWidth, spbHeight);
+                    break;
+            }
+             
+            
             base.OnPaint(e);
         }
     }
